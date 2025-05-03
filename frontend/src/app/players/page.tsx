@@ -9,7 +9,7 @@ export default function PlayersPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("https://basketball-dashboard-api.onrender.com/players")
+    axios.get("/players")
       .then((res) => {
         setPlayers(res.data);
         setLoading(false);
