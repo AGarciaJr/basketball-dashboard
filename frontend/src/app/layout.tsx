@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export const metadata = {
   title: 'FantasyStat+',
   description: 'Basketball Analytics Dashboard',
@@ -10,8 +12,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <aside className="w-64 bg-white shadow-lg p-6">
           <h1 className="text-xl font-bold mb-6">🏀 FantasyStat+</h1>
           <nav className="flex flex-col space-y-4">
-            <a href="/" className="hover:text-blue-600">Dashboard</a>
-            <a href="/players" className="hover:text-blue-600">Player Stats</a>
+            <Link href="/" className="hover:text-blue-600">Dashboard</Link>
+            <Link href="/players" className="hover:text-blue-600">Player Stats</Link>
           </nav>
         </aside>
         <main className="flex-1 p-10">{children}</main>
