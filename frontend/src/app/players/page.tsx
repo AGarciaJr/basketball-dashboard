@@ -1,12 +1,34 @@
+"use client";
+
+import api from "@/lib/axios";
+import { useState, useEffect } from "react";
 import PlayerTable from "@/components/PlayerTable";
-import { players } from "@/data/players";
 
 export default function PlayersPage() {
-    return (
-      <div>
-        <h2 className="text-2xl font-bold mb-4">Player Stats</h2>
-        <PlayerTable players={players}/>
-      </div>
-    );
+  const [players, setPlayers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.get("/players")
+      .then((res) => {
+        setPlayers(res.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching players:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
   }
+
+  return (
+    <div>
+      <h2 className="text-2xl font-bold mb-4">Player Stats</h2>
+      <PlayerTable players={players}/>
+    </div>
+  );
+}
   
