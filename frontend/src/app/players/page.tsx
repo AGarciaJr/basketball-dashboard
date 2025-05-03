@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import api from "@/lib/axios";
 import { useState, useEffect } from "react";
 import PlayerTable from "@/components/PlayerTable";
 
@@ -9,7 +9,7 @@ export default function PlayersPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("/players")
+    api.get("/players")
       .then((res) => {
         setPlayers(res.data);
         setLoading(false);
