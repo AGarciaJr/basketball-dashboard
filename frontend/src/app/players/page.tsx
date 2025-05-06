@@ -13,13 +13,6 @@ type Player = {
 };
 
 const PAGE_SIZE = 10;
-const columns = [
-  { key: "name", label: "Player" },
-  { key: "team", label: "Team" },
-  { key: "ppg", label: "PPG" },
-  { key: "apg", label: "APG" },
-  { key: "rpg", label: "RPG" },
-];
 
 export default function PlayersPage() {
   const [players, setPlayers] = useState<Player[]>([]);
@@ -32,7 +25,7 @@ export default function PlayersPage() {
   useEffect(() => {
     api.get("/players")
       .then((res) => {
-        const mapped = res.data.map((p: any) => ({
+        const mapped = res.data.map((p: { PLAYER_NAME: string; TEAM_ABBREVIATION: string; PTS: number; AST: number; REB: number }) => ({
           name: p.PLAYER_NAME,
           team: p.TEAM_ABBREVIATION,
           ppg: p.PTS,
