@@ -40,19 +40,19 @@ const basicStats: StatDefinition[] = [
 
 export default function BasicsPage(): React.ReactElement {
   return (
-    <div className="min-h-screen bg-mavericks-silver">
+    <div className="min-h-screen bg-white">
       <div className="container mx-auto px-4 py-12">
-        <Link href="/learn" className="text-mavericks-blue hover:text-mavericks-blueAccent mb-8 inline-block font-semibold">
+        <Link href="/learn" className="text-blue-600 hover:text-blue-700 mb-8 inline-block font-semibold">
           ← Back to Learning Hub
         </Link>
-        <h1 className="text-4xl font-bold text-mavericks-blue mb-8 drop-shadow">Basic Basketball Statistics</h1>
+        <h1 className="text-4xl font-bold text-blue-600 mb-8 drop-shadow">Basic Basketball Statistics</h1>
         <div className="space-y-8">
           {basicStats.map((stat, index) => (
-            <div key={index} className="bg-mavericks-white border-2 border-mavericks-blue rounded-xl shadow-lg p-6">
-              <h2 className="text-2xl font-semibold text-mavericks-blue mb-4">{stat.title}</h2>
-              <p className="text-mavericks-black mb-4">{stat.description}</p>
-              <div className="bg-mavericks-blueAccent/10 p-4 rounded-md">
-                <p className="text-mavericks-blueAccent">
+            <div key={index} className="bg-gray-100 border-2 border-blue-100 rounded-xl shadow p-6">
+              <h2 className="text-2xl font-semibold text-blue-600 mb-4">{stat.title}</h2>
+              <p className="text-gray-700 mb-4">{stat.description}</p>
+              <div className="bg-blue-50 p-4 rounded-md">
+                <p className="text-blue-600">
                   <span className="font-semibold">Example:</span> {stat.example}
                 </p>
               </div>
