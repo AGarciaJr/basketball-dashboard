@@ -13,7 +13,7 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"message": "FantasyStat+ API is live"}
+    return {"message": "Hoops IQ API is live"}
 
 @app.get("/players")
 def get_players():

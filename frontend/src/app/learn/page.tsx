@@ -5,29 +5,32 @@ import React from 'react';
 
 export default function LearnPage(): React.ReactElement {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8">Learn Basketball Statistics</h1>
-      
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        <Link href="/learn/basics" className="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <h2 className="text-2xl font-semibold mb-4">Basic Statistics</h2>
-          <p className="text-gray-600">
-            Start with the fundamentals: points, rebounds, assists, and more. Perfect for beginners!
-          </p>
-        </Link>
+    <div className="min-h-screen bg-mavericks-silver">
+      <div className="container mx-auto px-4 py-12">
+        <h1 className="text-4xl font-bold text-mavericks-blue mb-8 text-center drop-shadow">Learn Basketball Statistics</h1>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+          <Link href="/learn/basics" className="group">
+            <div className="bg-mavericks-white border-2 border-mavericks-blue rounded-xl shadow-lg p-6 hover:shadow-xl hover:bg-mavericks-blueAccent hover:text-mavericks-white transition-all">
+              <h2 className="text-2xl font-semibold text-mavericks-blue mb-4 group-hover:text-mavericks-white">Basic Statistics</h2>
+              <p className="text-mavericks-black group-hover:text-mavericks-white">
+                Start with the fundamentals: points, rebounds, assists, and more. Perfect for beginners!
+              </p>
+            </div>
+          </Link>
 
-        <div className="block p-6 bg-gray-100 rounded-lg">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-400">Advanced Statistics</h2>
-          <p className="text-gray-400">
-            Coming soon: Dive deeper into advanced metrics and their impact on the game.
-          </p>
-        </div>
+          <div className="bg-mavericks-white border-2 border-mavericks-silver rounded-xl shadow-lg p-6 opacity-70">
+            <h2 className="text-2xl font-semibold text-mavericks-blue mb-4">Advanced Statistics</h2>
+            <p className="text-mavericks-black">
+              Coming soon: Dive deeper into advanced metrics and their impact on the game.
+            </p>
+          </div>
 
-        <div className="block p-6 bg-gray-100 rounded-lg">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-400">Interactive Examples</h2>
-          <p className="text-gray-400">
-            Coming soon: Learn through real game examples and interactive visualizations.
-          </p>
+          <div className="bg-mavericks-white border-2 border-mavericks-silver rounded-xl shadow-lg p-6 opacity-70">
+            <h2 className="text-2xl font-semibold text-mavericks-blue mb-4">Interactive Examples</h2>
+            <p className="text-mavericks-black">
+              Coming soon: Learn through real game examples and interactive visualizations.
+            </p>
+          </div>
         </div>
       </div>
     </div>
