@@ -1,4 +1,9 @@
-import playerData from '../data/players.json';
+import playerData2024_25 from '../data/players_2024_25.json';
+import playerData2023_24 from '../data/players_2023_24.json';
+import playerData2022_23 from '../data/players_2022_23.json';
+import playerData2021_22 from '../data/players_2021_22.json';
+import playerData2020_21 from '../data/players_2020_21.json';
+import playerData2019_20 from '../data/players_2019_20.json';
 
 export interface Player {
   PLAYER_ID: number;
@@ -18,45 +23,46 @@ export interface Player {
   SEASON: string;
 }
 
-// Current season is 2023-24
-const CURRENT_SEASON = '2023-24';
+// Map of season to data
+const seasonData: { [key: string]: Player[] } = {
+  '2024-25': playerData2024_25,
+  '2023-24': playerData2023_24,
+  '2022-23': playerData2022_23,
+  '2021-22': playerData2021_22,
+  '2020-21': playerData2020_21,
+  '2019-20': playerData2019_20,
+};
 
 export function getAllPlayers(): Player[] {
-  return playerData.map(player => ({
-    ...player,
-    SEASON: CURRENT_SEASON
-  }));
+  return Object.values(seasonData).flat();
 }
 
 export function searchPlayers(query: string): Player[] {
   const searchTerm = query.toLowerCase();
-  return playerData
-    .filter(player => player.PLAYER_NAME.toLowerCase().includes(searchTerm))
-    .map(player => ({
-      ...player,
-      SEASON: CURRENT_SEASON
-    }));
+  return getAllPlayers().filter(player => 
+    player.PLAYER_NAME.toLowerCase().includes(searchTerm)
+  );
 }
 
 export function getPlayerById(id: number): Player | undefined {
-  const player = playerData.find(player => player.PLAYER_ID === id);
-  return player ? { ...player, SEASON: CURRENT_SEASON } : undefined;
+  return getAllPlayers().find(player => player.PLAYER_ID === id);
 }
 
 export function getPlayersByTeam(teamAbbreviation: string): Player[] {
-  return playerData
-    .filter(player => player.TEAM_ABBREVIATION === teamAbbreviation)
-    .map(player => ({
-      ...player,
-      SEASON: CURRENT_SEASON
-    }));
+  return getAllPlayers().filter(player => 
+    player.TEAM_ABBREVIATION === teamAbbreviation
+  );
 }
 
 export function getUniqueTeams(): string[] {
-  const teams = new Set(playerData.map(player => player.TEAM_ABBREVIATION));
+  const teams = new Set(getAllPlayers().map(player => player.TEAM_ABBREVIATION));
   return Array.from(teams).sort();
 }
 
 export function getAvailableSeasons(): string[] {
-  return [CURRENT_SEASON];
+  return Object.keys(seasonData).sort().reverse(); // Most recent season first
+}
+
+export function getPlayersBySeason(season: string): Player[] {
+  return seasonData[season] || [];
 } 
