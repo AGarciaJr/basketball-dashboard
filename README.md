@@ -2,6 +2,10 @@
 
 A comprehensive basketball statistics dashboard that helps users understand and analyze NBA player statistics.
 
+## 🎯 Why This Project?
+
+As someone interested in both software engineering and basketball, I built this dashboard to **deepen my understanding of basketball statistics**—how they’re structured, what they reveal, and how they can be used to tell compelling stories about the game. From field goal percentages to player efficiency, this app helps me explore and learn in real time.
+
 ## 🌐 Live Demo
 
 Visit the live application at: [Hoops IQ Dashboard](https://basketball-dashboard-phi.vercel.app/)
