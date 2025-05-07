@@ -22,7 +22,7 @@ export default function NewsFeed({ playerName }: NewsFeedProps) {
         const data = await response.json();
         setNews(data);
       } catch (err) {
-        setError('Failed to load news. Please try again later.');
+        setError(`Failed to load news: ${err instanceof Error ? err.message : 'Unknown error'}`);
       } finally {
         setLoading(false);
       }
