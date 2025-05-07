@@ -1,16 +1,8 @@
 "use client";
 
-import api from "@/lib/axios";
 import { useState, useEffect } from "react";
 import PlayerTable from "@/components/PlayerTable";
-
-type Player = {
-  name: string;
-  team: string;
-  ppg: number;
-  apg: number;
-  rpg: number;
-};
+import { Player, getAllPlayers, searchPlayers, getUniqueTeams, getAvailableSeasons } from "@/lib/players";
 
 const PAGE_SIZE = 10;
 
@@ -18,35 +10,35 @@ export default function PlayersPage() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [selectedTeam, setSelectedTeam] = useState<string>("");
+  const [selectedSeason, setSelectedSeason] = useState<string>("");
   const [page, setPage] = useState(1);
-  const [sortBy, setSortBy] = useState<keyof Player>("name");
+  const [sortBy, setSortBy] = useState<keyof Player>("PLAYER_NAME");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const teams = getUniqueTeams();
+  const seasons = getAvailableSeasons();
 
   useEffect(() => {
-    api.get("/players")
-      .then((res) => {
-        const mapped = res.data.map((p: { PLAYER_NAME: string; TEAM_ABBREVIATION: string; PTS: number; AST: number; REB: number }) => ({
-          name: p.PLAYER_NAME,
-          team: p.TEAM_ABBREVIATION,
-          ppg: p.PTS,
-          apg: p.AST,
-          rpg: p.REB,
-        }));
-        setPlayers(mapped);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching players:", err);
-        setLoading(false);
-      });
+    // Load all players from local data
+    setPlayers(getAllPlayers());
+    setLoading(false);
+    // Set default season to current season
+    setSelectedSeason(seasons[0]);
   }, []);
 
-  // Filter players by search
-  const filtered = players.filter(
-    (p) =>
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.team.toLowerCase().includes(search.toLowerCase())
-  );
+  // Filter players by search, team, and season
+  const filtered = players.filter(player => {
+    const matchesSearch = search 
+      ? player.PLAYER_NAME.toLowerCase().includes(search.toLowerCase())
+      : true;
+    const matchesTeam = selectedTeam
+      ? player.TEAM_ABBREVIATION === selectedTeam
+      : true;
+    const matchesSeason = selectedSeason
+      ? player.SEASON === selectedSeason
+      : true;
+    return matchesSearch && matchesTeam && matchesSeason;
+  });
 
   // Sort players
   const sorted = [...filtered].sort((a, b) => {
@@ -64,10 +56,10 @@ export default function PlayersPage() {
   const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
   const paginated = sorted.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
-  // Reset to page 1 if search or sort changes
+  // Reset to page 1 if search, team, season, or sort changes
   useEffect(() => {
     setPage(1);
-  }, [search, sortBy, sortDir]);
+  }, [search, selectedTeam, selectedSeason, sortBy, sortDir]);
 
   const handleSort = (col: keyof Player) => {
     if (sortBy === col) {
@@ -85,13 +77,34 @@ export default function PlayersPage() {
   return (
     <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow">
       <h2 className="text-3xl font-bold text-blue-600 mb-6 text-center">Player Stats</h2>
-      <input
-        type="text"
-        placeholder="Search by player or team..."
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        className="mb-6 w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black placeholder:text-blue-600"
-      />
+      <div className="flex gap-4 mb-6">
+        <input
+          type="text"
+          placeholder="Search by player name..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="flex-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black placeholder:text-blue-600"
+        />
+        <select
+          value={selectedTeam}
+          onChange={e => setSelectedTeam(e.target.value)}
+          className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black bg-white"
+        >
+          <option value="">All Teams</option>
+          {teams.map(team => (
+            <option key={team} value={team}>{team}</option>
+          ))}
+        </select>
+        <select
+          value={selectedSeason}
+          onChange={e => setSelectedSeason(e.target.value)}
+          className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 text-black bg-white"
+        >
+          {seasons.map(season => (
+            <option key={season} value={season}>{season}</option>
+          ))}
+        </select>
+      </div>
       <PlayerTable
         players={paginated}
         sortBy={sortBy}
