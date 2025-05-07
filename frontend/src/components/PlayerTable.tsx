@@ -1,4 +1,7 @@
-import { Player } from '@/lib/players';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import type { Player } from '@/lib/players';
 
 type SortDir = "asc" | "desc";
 
@@ -21,6 +24,12 @@ const columns: { key: keyof Player; label: string }[] = [
 ];
 
 export default function PlayerTable({ players, sortBy, sortDir, onSort }: Props) {
+  const router = useRouter();
+
+  const handleRowClick = (playerId: number) => {
+    router.push(`/players/${playerId}`);
+  };
+
   return (
     <div className="overflow-x-auto bg-white p-6 shadow-md rounded-xl">
       <table className="min-w-full table-auto border-collapse">
@@ -46,7 +55,11 @@ export default function PlayerTable({ players, sortBy, sortDir, onSort }: Props)
         </thead>
         <tbody>
           {players.map((p) => (
-            <tr key={p.PLAYER_ID} className="hover:bg-gray-100">
+            <tr 
+              key={p.PLAYER_ID} 
+              className="hover:bg-gray-100 cursor-pointer transition-colors"
+              onClick={() => handleRowClick(p.PLAYER_ID)}
+            >
               <td className="p-3 text-black">{p.PLAYER_NAME}</td>
               <td className="p-3 text-black">{p.TEAM_ABBREVIATION}</td>
               <td className="p-3 text-black">{p.PTS.toFixed(1)}</td>

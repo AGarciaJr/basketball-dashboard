@@ -24,16 +24,19 @@ export default function PlayersPage() {
   const teams = getUniqueTeams();
   const seasons = getAvailableSeasons();
 
+  // Load players data
   useEffect(() => {
-    // Load all players from local data
     const allPlayers = getAllPlayers();
     setPlayers(allPlayers);
     setLoading(false);
-    // Set default season to current season if not already set
+  }, []); // Empty dependency array since we only want this to run once on mount
+
+  // Set default season
+  useEffect(() => {
     if (!selectedSeason && seasons.length > 0) {
       setSelectedSeason(seasons[0]);
     }
-  }, []); // Empty dependency array since we only want this to run once on mount
+  }, [seasons, selectedSeason]);
 
   // Filter players by search, team, and season
   const filtered = players.filter(player => {
