@@ -26,11 +26,14 @@ export default function PlayersPage() {
 
   useEffect(() => {
     // Load all players from local data
-    setPlayers(getAllPlayers());
+    const allPlayers = getAllPlayers();
+    setPlayers(allPlayers);
     setLoading(false);
-    // Set default season to current season
-    setSelectedSeason(seasons[0]);
-  }, [seasons]);
+    // Set default season to current season if not already set
+    if (!selectedSeason && seasons.length > 0) {
+      setSelectedSeason(seasons[0]);
+    }
+  }, []); // Empty dependency array since we only want this to run once on mount
 
   // Filter players by search, team, and season
   const filtered = players.filter(player => {
