@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import PlayerTable from "@/components/PlayerTable";
-import { Player, getAllPlayers, searchPlayers, getUniqueTeams, getAvailableSeasons } from "@/lib/players";
+import { Player, getAllPlayers, getUniqueTeams, getAvailableSeasons } from "@/lib/players";
 
 const PAGE_SIZE = 10;
 
@@ -30,7 +30,7 @@ export default function PlayersPage() {
     setLoading(false);
     // Set default season to current season
     setSelectedSeason(seasons[0]);
-  }, []);
+  }, [seasons]);
 
   // Filter players by search, team, and season
   const filtered = players.filter(player => {
