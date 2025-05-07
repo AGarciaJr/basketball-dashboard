@@ -21,6 +21,9 @@ export interface Player {
   FG3_PCT: number;
   FT_PCT: number;
   SEASON: string;
+  FGA: number;
+  FTA: number;
+  TOV: number;
 }
 
 // Map of season to data

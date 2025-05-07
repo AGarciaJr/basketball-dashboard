@@ -15,6 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <nav className="flex flex-col space-y-4">
             <Link href="/" className="hover:text-blue-600 transition-colors">Dashboard</Link>
             <Link href="/players" className="hover:text-blue-600 transition-colors">Player Stats</Link>
+            <Link href="/analysis" className="hover:text-blue-600 transition-colors">Analysis</Link>
           </nav>
         </aside>
         <main className="flex-1 p-10 bg-white">{children}</main>
