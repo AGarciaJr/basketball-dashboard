@@ -49,7 +49,7 @@ export default function NewsFeed({ playerName }: NewsFeedProps) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Latest News about {playerName}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-blue-600">Latest News about {playerName}</h2>
       {news.map((item, index) => (
         <article key={index} className="bg-white rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow">
           <h3 className="text-lg font-semibold mb-2">
