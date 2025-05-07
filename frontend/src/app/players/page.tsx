@@ -6,6 +6,12 @@ import { Player, getAllPlayers, searchPlayers, getUniqueTeams, getAvailableSeaso
 
 const PAGE_SIZE = 10;
 
+// Helper function to get last name
+function getLastName(fullName: string): string {
+  const parts = fullName.split(' ');
+  return parts[parts.length - 1];
+}
+
 export default function PlayersPage() {
   const [players, setPlayers] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,9 +50,20 @@ export default function PlayersPage() {
   const sorted = [...filtered].sort((a, b) => {
     const aVal = a[sortBy];
     const bVal = b[sortBy];
+    
+    if (sortBy === "PLAYER_NAME") {
+      // Sort by last name
+      const aLastName = getLastName(aVal as string);
+      const bLastName = getLastName(bVal as string);
+      return sortDir === "asc"
+        ? aLastName.localeCompare(bLastName)
+        : bLastName.localeCompare(aLastName);
+    }
+    
     if (typeof aVal === "number" && typeof bVal === "number") {
       return sortDir === "asc" ? aVal - bVal : bVal - aVal;
     }
+    
     return sortDir === "asc"
       ? String(aVal).localeCompare(String(bVal))
       : String(bVal).localeCompare(String(aVal));
